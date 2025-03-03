@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Próximo Feriado en Argentina</title>
+    <meta name="description" content="Descubrí cuál es el próximo feriado en Argentina y cuántos días faltan para este.">
+    <meta name="keywords" content="feriados, próximos feriados, Argentina, días no laborables, calendario, feriados nacionales">
+    <meta name="author" content="Efecto - Agencia Digital">
+    <link rel="stylesheet" href="styles.css?v=1.3">
+    <script src="script.js?v=1.2"></script>
+    <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+<body>
+    <header>
+        <h1>Próximo Feriado en Argentina</h1>
+    </header>
+    <div class="container">
+        <div id="diasFaltantes">
+            <span class="intro">Faltan</span>
+            <span class="numero"></span>
+            <span class="resto">para el próximo feriado</span>
+            <div class="separator"></div>
+        </div>
+        <div id="feriado"></div>
+        <button id="verCalendarioBtn">Ver calendario</button>
+    </div>
+    <br>
+        Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank">Efecto - Agencia Digital</a></br>
+        <a href='https://cafecito.app/efectod' rel='noopener' target='_blank'><img srcset='https://cdn.cafecito.app/imgs/buttons/button_5.png 1x, https://cdn.cafecito.app/imgs/buttons/button_5_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_5_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_5.png' alt='Invitame un café en cafecito.app' /></a>
+    </footer>
+
+    <!-- Modal -->
+    <div id="calendarioModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-body">
+                <div id="calendario"></div>
+                <div id="listaFeriados"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts JS al final del body -->
+    <script src="calendario.js?v=1.2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+</body>
+</html>

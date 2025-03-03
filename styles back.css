@@ -1,0 +1,271 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+.container {
+    background: #fff;
+    padding: 50px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 500px;
+    margin-bottom: 50px;
+}
+
+.separator {
+    height: 1px;
+    background-color: #ddd;
+    margin: 50px 0;
+}
+
+#diasFaltantes .intro,
+#diasFaltantes .numero,
+#diasFaltantes .resto {
+    display: block;
+    padding-top: 3px;
+}
+
+#diasFaltantes .intro {
+    font-size: 1em;
+    color: #555;
+}
+
+#diasFaltantes .numero {
+    font-size: 3em;
+    font-weight: bold;
+    color: #004793;
+    margin: 10px 0;
+}
+
+#diasFaltantes .resto {
+    font-size: 1em;
+    color: #555;
+}
+
+#feriado {
+    font-size: 1.2em;
+    color: #333;
+    margin: 20px 0;
+}
+
+#feriado .nombre {
+    display: block;
+    font-weight: light;
+    font-size: 1.1em;
+    color: #4d4d4d;
+    margin-top: 4px;
+}
+
+#feriado .fecha {
+    display: block;
+    font-weight: bolder;
+    font-size: 1em;
+    color: #004793;
+    margin-top: 20px;
+}
+
+#verCalendarioBtn {
+    font-size: 0.8em;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #004793;
+    border: 1px solid #004793;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0px;
+}
+
+#verCalendarioBtn:hover {
+    background-color: #003366;
+    color: #ffffff;
+}
+#diasFaltantes .resto small {
+    display: block;
+    margin-top: 20px;
+    font-size: 0.8em;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+}
+
+.close {
+    color: #aaa;
+    align-self: flex-end;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+#calendario {
+    width: 60%;
+    position: relative; /* Añadir posición relativa para las flechas */
+}
+
+#listaFeriados {
+    width: 35%;
+    padding-left: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.arrow {
+    position: absolute;
+    top:12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 0.7em;
+    color: #8e8e8e;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.arrow-left {
+    left: 5px;
+}
+
+.arrow-right {
+    right: 5px;
+}
+
+
+#listaFeriados {
+    width: 35%;
+    padding-left: 20px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.feriado {
+    background-color: #52abff;
+}
+
+.feriado-item {
+    margin-bottom: 10px;
+}
+
+.feriado-item .nombre {
+    font-weight: bold;
+    display: block; /* Asegura que el título esté en su propia línea */
+    margin-bottom: 5px; /* Espacio entre el título y la fecha */
+}
+
+.feriado-item .fecha {
+    color: #555;
+    display: block; /* Asegura que la fecha esté en su propia línea */
+}
+
+.hoy {
+    background-color: yellow !important;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+caption {
+    caption-side: top;
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .modal-content {
+        padding: 10px;
+    }
+
+    #calendario, #listaFeriados {
+        width: 100%; /* Ajustar al 100% del ancho del contenedor en móviles */
+        padding-left: 0; /* Eliminar el padding izquierdo en móviles */
+    }
+
+    .modal-body {
+        flex-direction: column; /* Cambiar la dirección a columna en móviles */
+        align-items: center; /* Centrar los elementos en móviles */
+    }
+
+    #listaFeriados {
+        max-height: 200px; /* Reducir la altura máxima en móviles */
+    }
+}
