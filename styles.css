@@ -10,7 +10,7 @@
   --color-muted: #666666;
   --color-border: #dddddd;
   --color-hover: #004080;
-  --color-highlight: #fffacd;
+  --color-highlight: #ff9500;
   
   /* More readable font choices */
   --font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
@@ -79,9 +79,6 @@ header h1 {
   transition: transform var(--transition-speed);
 }
 
-.container:hover {
-  transform: translateY(-2px);
-}
 
 .separator {
   height: 2px;
@@ -186,7 +183,7 @@ header h1 {
   padding: var(--spacing-lg);
   border-radius: var(--border-radius);
   width: 90%;
-  max-width: 800px;
+  max-width: 900px;
   box-shadow: var(--box-shadow);
   position: relative;
   max-height: 90vh;
@@ -211,23 +208,26 @@ header h1 {
 
 .close:hover {
   color: var(--color-text);
-  background-color: var(--color-bg-light);
+  background-color: var(--color-border);
 }
 
 .modal-body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-md);
+  align-items: flex-start;
 }
 
 /* Improved calendar styling */
 #calendario {
-  width: 100%;
+  width: 65%;
 }
 
 #listaFeriados {
-  max-height: 300px;
+  width: 35%;
+  max-height: 500px;
   overflow-y: auto;
+  margin-top: var(--spacing-lg);
   padding: var(--spacing-sm);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
@@ -315,6 +315,8 @@ caption {
   transition: all var(--transition-speed) ease;
   width: 30px;
   height: 30px;
+  /* Añadimos margen horizontal para separar las flechas del texto */
+  margin: 0 var(--spacing-lg);
 }
 
 .arrow:hover {
@@ -342,6 +344,14 @@ caption {
   .modal-content {
     padding: var(--spacing-md);
     width: 95%;
+  }
+
+  .modal-body {
+    flex-direction: column;
+  }
+  
+  #calendario, #listaFeriados {
+    width: 100%;
   }
 }
 
