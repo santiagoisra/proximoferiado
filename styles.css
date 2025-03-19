@@ -235,7 +235,7 @@ header h1 {
 }
 
 .feriado {
-  background-color: var(--color-secondary);
+  background-color: var(--color-highlight);
   color: var(--color-bg);
   font-weight: 600;
 }
@@ -265,7 +265,7 @@ header h1 {
 }
 
 .hoy {
-  background-color: var(--color-highlight) !important;
+  background-color: var(--color-primary) !important;
   font-weight: bold;
 }
 
