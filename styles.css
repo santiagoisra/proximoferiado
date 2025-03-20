@@ -266,6 +266,7 @@ header h1 {
 
 .hoy {
   background-color: var(--color-secondary) !important;
+  color: var(--color-bg);
   font-weight: bold;
 }
 
