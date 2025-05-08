@@ -11,20 +11,20 @@
   --color-border: #dddddd;
   --color-hover: #004080;
   --color-highlight: #ff9500;
-  
+
   /* More readable font choices */
   --font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
   --font-size-base: 16px;
   --font-size-large: 1.75rem;
   --font-size-medium: 1.25rem;
   --font-size-small: 0.875rem;
-  
+
   /* Improved spacing for better visual hierarchy */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 2.5rem;
-  
+
   /* Enhanced visual elements */
   --border-radius: 8px;
   --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -137,6 +137,22 @@ header h1 {
   color: var(--color-secondary);
 }
 
+#feriado .finde-info {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+#feriado .aviso-finde {
+  display: block;
+  padding: var(--spacing-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  line-height: 1.4;
+}
+
 /* Improved button styling */
 #verCalendarioBtn {
   font-size: var(--font-size-small);
@@ -240,6 +256,12 @@ header h1 {
   font-weight: 600;
 }
 
+.feriado-finde {
+  background-color: #ff9ad5; /* Rosa suave */
+  color: var(--color-text);
+  font-weight: 600;
+}
+
 .feriado-item {
   margin-bottom: var(--spacing-sm);
   padding: var(--spacing-xs);
@@ -262,6 +284,17 @@ header h1 {
   display: block;
   font-size: var(--font-size-small);
   margin-top: 4px;
+}
+
+.feriado-item-finde {
+  border-left: 3px solid #ff9ad5; /* Rosa suave */
+  padding-left: 8px;
+}
+
+.indicador-finde {
+  color: #d4006a; /* Rosa más oscuro */
+  font-size: 0.8em;
+  font-style: italic;
 }
 
 .hoy {
@@ -333,15 +366,15 @@ caption {
     --spacing-md: 1.25rem;
     --spacing-lg: 2rem;
   }
-  
+
   .container {
     padding: var(--spacing-md);
   }
-  
+
   #diasFaltantes .numero {
     font-size: 2.75rem;
   }
-  
+
   .modal-content {
     padding: var(--spacing-md);
     width: 95%;
@@ -350,7 +383,7 @@ caption {
   .modal-body {
     flex-direction: column;
   }
-  
+
   #calendario, #listaFeriados {
     width: 100%;
   }
@@ -362,36 +395,46 @@ caption {
     --spacing-sm: 0.75rem;
     --spacing-md: 1rem;
   }
-  
+
   header h1 {
     font-size: 1.35rem;
   }
-  
+
   .modal-content {
     padding: var(--spacing-sm);
   }
-  
+
   #calendario, #listaFeriados {
     width: 100%;
   }
-  
+
   .modal-body {
     flex-direction: column;
     align-items: center;
     gap: var(--spacing-sm);
   }
-  
+
   #listaFeriados {
     max-height: 200px;
   }
-  
+
   th, td {
     padding: var(--spacing-xs);
     font-size: var(--font-size-small);
   }
-  
+
   #diasFaltantes .numero {
     font-size: 2.25rem;
+  }
+
+  #feriado .finde-info {
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  #feriado .aviso-finde {
+    font-size: 0.8rem;
+    padding: 0.25rem;
   }
 }
 

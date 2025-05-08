@@ -61,13 +61,29 @@ function generarCalendario(mes, año, feriados) {
 
     for (let dia = 1; dia <= ultimoDiaMes; dia++) {
         const fechaActual = new Date(año, mes, dia);
+        const diaSemanaActual = fechaActual.getDay(); // 0 = domingo, 6 = sábado
+        const esFinDeSemana = (diaSemanaActual === 0 || diaSemanaActual === 6);
+
+        // Verificar si es feriado
+        let feriadoEncontrado = null;
         const esFeriado = feriados.some(feriado => {
-            return feriado.fecha.toDateString() === fechaActual.toDateString();
+            const coincide = feriado.fecha.toDateString() === fechaActual.toDateString();
+            if (coincide) {
+                feriadoEncontrado = feriado;
+            }
+            return coincide;
         });
+
         const esHoy = esHoyMesActual && dia === hoy.getDate();
 
         let clase = '';
-        if (esFeriado) clase += 'feriado ';
+        if (esFeriado) {
+            if (esFinDeSemana) {
+                clase += 'feriado-finde ';
+            } else {
+                clase += 'feriado ';
+            }
+        }
         if (esHoy) clase += 'hoy';
 
         tabla += `<td class="${clase}">${dia}</td>`;
@@ -94,12 +110,32 @@ function mostrarListaFeriados(mes, año, feriados) {
     feriadosMesActual.forEach(feriado => {
         const feriadoItem = document.createElement('div');
         feriadoItem.classList.add('feriado-item');
+
+        // Verificar si el feriado cae en fin de semana
+        const diaSemana = feriado.fecha.getDay(); // 0 = domingo, 6 = sábado
+        const esFinDeSemana = (diaSemana === 0 || diaSemana === 6);
+
+        if (esFinDeSemana) {
+            feriadoItem.classList.add('feriado-item-finde');
+        }
+
         const nombre = document.createElement('span');
         nombre.classList.add('nombre');
         nombre.textContent = feriado.nombre;
+
         const fecha = document.createElement('span');
         fecha.classList.add('fecha');
         fecha.textContent = formatearFecha(feriado.fecha);
+
+        // Agregar indicador de fin de semana si corresponde
+        if (esFinDeSemana) {
+            const indicador = document.createElement('span');
+            indicador.classList.add('indicador-finde');
+            indicador.textContent = '(fin de semana)';
+            fecha.appendChild(document.createElement('br'));
+            fecha.appendChild(indicador);
+        }
+
         feriadoItem.appendChild(nombre);
         feriadoItem.appendChild(fecha);
         listaFeriados.appendChild(feriadoItem);
