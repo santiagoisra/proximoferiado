@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página no encontrada | Próximo Feriado Argentina</title>
+    <meta name="description" content="La página que estás buscando no existe. Volvé a la página principal para ver el próximo feriado en Argentina.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="stylesheet" href="styles.css?v=1.5">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    <link rel="canonical" href="https://proximoferiado.com.ar/">
+    
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin: 0;
+            line-height: 1;
+            opacity: 0.5;
+        }
+        
+        .error-message {
+            font-size: 1.5rem;
+            margin: 1rem 0 2rem;
+            color: var(--color-text);
+        }
+        
+        .error-description {
+            margin-bottom: 2rem;
+            color: var(--color-muted);
+        }
+        
+        .home-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .home-button:hover {
+            background-color: var(--color-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feriado-sugerido {
+            margin-top: 3rem;
+            padding: 1rem;
+            background-color: var(--color-bg-light);
+            border-radius: var(--border-radius);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Próximo Feriado Argentina</h1>
+    </header>
+    
+    <main>
+        <div class="error-container">
+            <p class="error-code">404</p>
+            <h2 class="error-message">Página no encontrada</h2>
+            <p class="error-description">La página que estás buscando no existe o fue movida. Mientras tanto, ¿por qué no revisás cuándo es el próximo feriado?</p>
+            
+            <a href="/" class="home-button">Ir a la página principal</a>
+            
+            <div class="feriado-sugerido">
+                <h3>¿Sabías que...?</h3>
+                <p id="feriado-dato">Cargando información sobre el próximo feriado...</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank" rel="noopener">Efecto - Agencia Digital</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Cargar información sobre el próximo feriado
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('feriados.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const feriados = parseFeriados(data);
+                    mostrarDatoFeriado(feriados);
+                })
+                .catch(error => {
+                    console.error('Error al leer el archivo de feriados:', error);
+                    document.getElementById("feriado-dato").textContent = 
+                        "En Argentina hay aproximadamente 19 feriados nacionales por año.";
+                });
+        });
+
+        function parseFeriados(data) {
+            const feriados = [];
+            const lines = data.split('\n');
+            for (let line of lines) {
+                if (line.trim() === '') continue;
+                const [nombre, fecha] = line.split(',');
+                try {
+                    const fechaObj = new Date(fecha.trim());
+                    feriados.push({ nombre, fecha: fechaObj });
+                } catch (e) {
+                    console.error(`Error al procesar la fecha para: ${nombre}`, e);
+                }
+            }
+            return feriados;
+        }
+
+        function mostrarDatoFeriado(feriados) {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            
+            // Encontrar el próximo feriado
+            let proximoFeriado = null;
+            for (let feriado of feriados) {
+                if (feriado.fecha >= hoy) {
+                    proximoFeriado = feriado;
+                    break;
+                }
+            }
+            
+            if (proximoFeriado) {
+                const diasFaltantes = Math.ceil((proximoFeriado.fecha - hoy) / (1000 * 60 * 60 * 24));
+                const fechaFormateada = formatearFecha(proximoFeriado.fecha);
+                
+                if (diasFaltantes === 0) {
+                    document.getElementById("feriado-dato").textContent = 
+                        `¡Hoy es feriado! Se celebra "${proximoFeriado.nombre}".`;
+                } else {
+                    document.getElementById("feriado-dato").textContent = 
+                        `El próximo feriado es "${proximoFeriado.nombre}" el ${fechaFormateada}. ¡Faltan ${diasFaltantes} días!`;
+                }
+            } else {
+                document.getElementById("feriado-dato").textContent = 
+                    "No hay más feriados programados para este año.";
+            }
+        }
+
+        function formatearFecha(fecha) {
+            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+            
+            const diaSemana = dias[fecha.getDay()];
+            const dia = fecha.getDate();
+            const mes = meses[fecha.getMonth()];
+            
+            return `${diaSemana} ${dia} de ${mes}`;
+        }
+    </script>
+</body>
+</html>

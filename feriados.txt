@@ -1,45 +1,45 @@
 Año Nuevo,2024-01-01
 Carnaval,2024-02-12
 Carnaval,2024-02-13
-Dí­a Nacional de la Memoria por la Verdad y la Justicia,2024-03-24
+Día Nacional de la Memoria por la Verdad y la Justicia,2024-03-24
 Jueves Santo Festividad Cristiana,2024-03-28
 Viernes Santo Festividad Cristiana,2024-03-29
-Feriado con fines turí­sticos,2024-04-01
-Dí­a del Veterano y de los Caídos en la Guerra de Malvinas,2024-04-02
+Feriado con fines turísticos,2024-04-01
+Día del Veterano y de los Caídos en la Guerra de Malvinas,2024-04-02
 Fiesta de la Ruptura del Ayuno del Sagrado Mes de Ramadán (Id al-Fitr) (c),2024-04-10
-Primeros dos dí­as de la Pascua Judí­a (b),2024-04-23
-Primeros dos dí­as de la Pascua Judí­a (b),2024-04-24
-Últimos dos dí­as de la Pascua Judí­a (b),2024-04-29
-Últimos dos dí­as de la Pascua Judí­a (b),2024-04-30
-DÃ­a de acción por la tolerancia y el respeto entre los pueblos (a),2024-04-24
-DÃ­a del Trabajador,2024-05-01
-DÃ­a de la Revolución de Mayo,2024-05-25
-Paso a la Inmortalidad del Gral. Don Martí­n Miguel de Güemes,2024-06-17
+Primeros dos días de la Pascua Judía (b),2024-04-23
+Primeros dos días de la Pascua Judía (b),2024-04-24
+Últimos dos días de la Pascua Judía (b),2024-04-29
+Últimos dos días de la Pascua Judía (b),2024-04-30
+Día de acción por la tolerancia y el respeto entre los pueblos (a),2024-04-24
+Día del Trabajador,2024-05-01
+Día de la Revolución de Mayo,2024-05-25
+Paso a la Inmortalidad del Gral. Don Martín Miguel de Güemes,2024-06-17
 Paso a la Inmortalidad del Gral. Manuel Belgrano,2024-06-20
-Feriado con fines turí­sticos,2024-06-21
-DÃ­a de la Independencia,2024-07-09
+Feriado con fines turísticos,2024-06-21
+Día de la Independencia,2024-07-09
 Paso a la Inmortalidad del Gral. José de San Martín,2024-08-17
-Feriado con fines turí­sticos,2024-10-11
-DÃ­a del Respeto a la Diversidad Cultural,2024-10-12
-DÃ­a de la SoberanÃ­a Nacional,2024-11-18
+Feriado con fines turísticos,2024-10-11
+Día del Respeto a la Diversidad Cultural,2024-10-12
+Día de la Soberanía Nacional,2024-11-18
 Inmaculada Concepción de María,2024-12-08
 Navidad,2024-12-25
-Año nuevo, 2025-01-01
-Carnaval Día 1 de 2, 2025-03-03
-Carnaval Día 2 de 2, 2025-03-04
-Dí­a Nacional de la Memoria por la Verdad y la Justicia, 2025-03-24
-Dí­a del Veterano y de los Caí­dos en la Guerra de Malvinas, 2025-04-02
-Jueves Santo (no laborable), 2025-04-17
-Viernes Santo, 2025-04-18
-Dí­a del Trabajador, 2025-05-01
-Feriado puente (no laborable), 2025-05-02
-Dí­a de la Revolución de Mayo, 2025-05-25
-Paso a la Inmortalidad del General Don Martí­n Miguel de Güemes (17 transladado), 2025-06-16
-Paso a la Inmortalidad del General Don Manuel Belgrano, 2025-06-20
-Dí­a de la Independencia, 2025-07-09
-Dí­a no laborable puente (Paso a la Inmortalidad del General Don José de San MartÃ­n 17/08), 2025-08-15
-Dí­a del Respeto a la Diversidad Cultural (feriado trasladable), 2025-10-12
-Dí­a no laborable puente, 2025-11-21
-Dí­a de la SoberanÃ­a Nacional (se traslada del jueves 20 de noviembre), 2025-11-24
-Dí­a de la Inmaculada Concepción de María, 2025-12-08
-Navidad, 2025-12-25
+Año Nuevo,2025-01-01
+Carnaval Día 1 de 2,2025-03-03
+Carnaval Día 2 de 2,2025-03-04
+Día Nacional de la Memoria por la Verdad y la Justicia,2025-03-24
+Día del Veterano y de los Caídos en la Guerra de Malvinas,2025-04-02
+Jueves Santo (no laborable),2025-04-17
+Viernes Santo,2025-04-18
+Día del Trabajador,2025-05-01
+Feriado puente (no laborable),2025-05-02
+Día de la Revolución de Mayo,2025-05-25
+Paso a la Inmortalidad del General Don Martín Miguel de Güemes (17 transladado),2025-06-16
+Paso a la Inmortalidad del General Don Manuel Belgrano,2025-06-20
+Día de la Independencia,2025-07-09
+Día no laborable puente (Paso a la Inmortalidad del General Don José de San Martín 17/08),2025-08-15
+Día del Respeto a la Diversidad Cultural (feriado trasladable),2025-10-12
+Día no laborable puente,2025-11-21
+Día de la Soberanía Nacional (se traslada del jueves 20 de noviembre),2025-11-24
+Día de la Inmaculada Concepción de María,2025-12-08
+Navidad,2025-12-25

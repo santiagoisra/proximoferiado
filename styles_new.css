@@ -1,0 +1,489 @@
+/* Variables globales */
+:root {
+  /* Improved color palette with better contrast ratios */
+  --color-primary: #0056b3;
+  --color-secondary: #3498db;
+  --color-accent: #004080;
+  --color-bg: #ffffff;
+  --color-bg-light: #f5f7fa;
+  --color-text: #333333;
+  --color-muted: #666666;
+  --color-border: #dddddd;
+  --color-hover: #004080;
+  --color-highlight: #ff9500;
+
+  /* More readable font choices */
+  --font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  --font-size-base: 16px;
+  --font-size-large: 1.75rem;
+  --font-size-medium: 1.25rem;
+  --font-size-small: 0.875rem;
+
+  /* Improved spacing for better visual hierarchy */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2.5rem;
+
+  /* Enhanced visual elements */
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --transition-speed: 0.25s;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  min-height: 100vh;
+}
+
+/* Improved header styling */
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+  max-width: 600px;
+}
+
+header h1 {
+  font-size: var(--font-size-large);
+  color: var(--color-primary);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
+}
+
+/* Enhanced container styling */
+.container {
+  background: var(--color-bg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  max-width: 550px;
+  width: 100%;
+  transition: transform var(--transition-speed);
+}
+
+
+.separator {
+  height: 2px;
+  background-color: var(--color-border);
+  margin: var(--spacing-md) 0;
+  opacity: 0.7;
+}
+
+/* Improved countdown display */
+#diasFaltantes .intro,
+#diasFaltantes .numero,
+#diasFaltantes .resto {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+}
+
+#diasFaltantes .intro {
+  font-size: var(--font-size-medium);
+  color: var(--color-muted);
+}
+
+#diasFaltantes .numero {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin: var(--spacing-sm) 0;
+}
+
+#diasFaltantes .resto {
+  font-size: var(--font-size-medium);
+  color: var(--color-muted);
+}
+
+/* Enhanced holiday display */
+#feriado {
+  font-size: var(--font-size-medium);
+  color: var(--color-text);
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm);
+  background-color: var(--color-bg-light);
+  border-radius: var(--border-radius);
+}
+
+#feriado .nombre {
+  font-weight: bold;
+  font-size: var(--font-size-medium);
+  color: var(--color-primary);
+  display: block;
+  margin-bottom: var(--spacing-xs);
+}
+
+#feriado .fecha {
+  font-weight: bold;
+  font-size: var(--font-size-medium);
+  color: var(--color-secondary);
+}
+
+#feriado .finde-info {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm);
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+#feriado .aviso-finde {
+  display: block;
+  padding: var(--spacing-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  line-height: 1.4;
+}
+
+/* Improved button styling */
+#verCalendarioBtn {
+  font-size: var(--font-size-small);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  font-weight: 600;
+  margin-top: var(--spacing-md);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#verCalendarioBtn:hover {
+  background-color: var(--color-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#verCalendarioBtn:active {
+  transform: translateY(0);
+}
+
+/* Enhanced modal styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background-color: var(--color-bg);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 900px;
+  box-shadow: var(--box-shadow);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.close {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  font-size: 1.75rem;
+  color: var(--color-muted);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all var(--transition-speed) ease;
+}
+
+.close:hover {
+  color: var(--color-text);
+  background-color: var(--color-border);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+/* Improved calendar styling */
+#calendario {
+  width: 65%;
+}
+
+#calendario table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+#calendario table, #calendario th, #calendario td {
+  border: 1px solid var(--color-border);
+}
+
+#calendario th, #calendario td {
+  padding: var(--spacing-sm);
+  text-align: center;
+}
+
+#calendario th {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+#calendario .selector-mes {
+  text-align: center;
+  font-size: var(--font-size-medium);
+  margin-bottom: var(--spacing-md);
+  font-weight: 600;
+  color: var(--color-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+#calendario .selector-mes .mes-anio {
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  flex-grow: 1;
+  text-align: center;
+}
+
+#calendario .arrow {
+  cursor: pointer;
+  font-size: var(--font-size-medium);
+  color: var(--color-primary);
+  padding: var(--spacing-xs);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-speed) ease;
+  width: 30px;
+  height: 30px;
+  /* Añadimos margen horizontal para separar las flechas del texto */
+  margin: 0 var(--spacing-sm);
+}
+
+#calendario .arrow:hover {
+  color: var(--color-bg);
+  background-color: var(--color-primary);
+}
+
+#calendario .feriado {
+  background-color: var(--color-highlight);
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+td.feriado-finde {
+  background-color: #ff9ad5 !important; /* Rosa suave */
+  color: #333333 !important;
+  font-weight: 600;
+}
+
+#calendario .hoy {
+  background-color: var(--color-secondary) !important;
+  color: var(--color-bg);
+  font-weight: bold;
+}
+
+/* Estilos de lista de feriados */
+#listaFeriados {
+  width: 35%;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background-color: var(--color-bg-light);
+}
+
+.feriado-item {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.feriado-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.feriado-item .nombre {
+  font-weight: bold;
+  display: block;
+  color: var(--color-primary);
+}
+
+.feriado-item .fecha {
+  color: var(--color-muted);
+  display: block;
+  font-size: var(--font-size-small);
+  margin-top: 4px;
+}
+
+#listaFeriados h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.feriado-item-finde {
+  border-left: 3px solid #ff9ad5; /* Rosa suave */
+  padding-left: 8px;
+}
+
+.indicador-finde {
+  color: #d4006a; /* Rosa más oscuro */
+  font-size: 0.8em;
+  font-style: italic;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+/* Estilos de pie de página */
+footer {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  color: var(--color-muted);
+  font-size: var(--font-size-small);
+  width: 100%;
+  max-width: 600px;
+}
+
+footer a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 15px;
+    --font-size-large: 1.5rem;
+    --spacing-md: 1.25rem;
+    --spacing-lg: 2rem;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  #diasFaltantes .numero {
+    font-size: 2.75rem;
+  }
+
+  .modal-content {
+    padding: var(--spacing-md);
+    width: 95%;
+  }
+
+  .modal-body {
+    flex-direction: column;
+  }
+
+  #calendario, #listaFeriados {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --font-size-base: 14px;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+  }
+
+  header h1 {
+    font-size: 1.35rem;
+  }
+
+  .modal-content {
+    padding: var(--spacing-sm);
+  }
+
+  #calendario, #listaFeriados {
+    width: 100%;
+  }
+
+  .modal-body {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  #listaFeriados {
+    max-height: 200px;
+  }
+
+  #calendario th, #calendario td {
+    padding: var(--spacing-xs);
+    font-size: var(--font-size-small);
+  }
+
+  #diasFaltantes .numero {
+    font-size: 2.25rem;
+  }
+
+  #feriado .finde-info {
+    padding: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  #feriado .aviso-finde {
+    font-size: 0.8rem;
+    padding: 0.25rem;
+  }
+}
+
+/* Accessibility improvements */
+:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Add smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}

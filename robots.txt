@@ -1,0 +1,24 @@
+# Próximo Feriado Argentina - Configuración de robots.txt
+# https://proximoferiado.com.ar/
+
+User-agent: *
+Allow: /
+Disallow: /private/
+
+# Permitir a todos los rastreadores acceder a los recursos estáticos
+Allow: /images/
+Allow: /styles.css
+Allow: /manifest.json
+
+# Sitemap
+Sitemap: https://proximoferiado.com.ar/sitemap.xml
+
+# Tiempos de rastreo específicos para bots principales
+User-agent: Googlebot
+Crawl-delay: 1
+
+User-agent: bingbot
+Crawl-delay: 2
+
+User-agent: Yandex
+Crawl-delay: 3

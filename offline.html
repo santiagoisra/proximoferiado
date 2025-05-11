@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sin conexión | Próximo Feriado Argentina</title>
+    <meta name="description" content="No hay conexión a internet. Algunos contenidos pueden estar disponibles offline.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+    
+    <style>
+        :root {
+            --color-primary: #0056b3;
+            --color-secondary: #3498db;
+            --color-accent: #004080;
+            --color-bg: #ffffff;
+            --color-bg-light: #f5f7fa;
+            --color-text: #333333;
+            --color-muted: #666666;
+            --color-border: #dddddd;
+            --font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--color-primary);
+            color: var(--color-bg);
+            width: 100%;
+        }
+        
+        header h1 {
+            font-size: 1.75rem;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            width: 100%;
+        }
+        
+        .offline-container {
+            background: var(--color-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            max-width: 550px;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+        
+        .offline-message {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+        
+        .offline-description {
+            margin-bottom: 2rem;
+            color: var(--color-muted);
+        }
+        
+        .cached-data {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: var(--color-bg-light);
+            border-radius: var(--border-radius);
+            text-align: left;
+        }
+        
+        .cached-data h3 {
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+        
+        .retry-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .retry-button:hover {
+            background-color: var(--color-accent);
+        }
+        
+        footer {
+            background-color: var(--color-primary);
+            color: var(--color-bg);
+            padding: 1.5rem;
+            text-align: center;
+            width: 100%;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Próximo Feriado Argentina</h1>
+    </header>
+    
+    <main>
+        <div class="offline-container">
+            <div class="offline-icon">📶</div>
+            <h2 class="offline-message">Sin conexión a internet</h2>
+            <p class="offline-description">No se puede conectar al servidor. Algunos contenidos pueden estar disponibles en modo offline si los has visitado anteriormente.</p>
+            
+            <button class="retry-button" onclick="window.location.reload()">Reintentar conexión</button>
+            
+            <div class="cached-data">
+                <h3>Información disponible offline:</h3>
+                <div id="cached-feriado">
+                    <p>Buscando información en caché...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Próximo Feriado Argentina - Versión Offline</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Intentar recuperar datos de feriados del localStorage
+            const feriadosData = localStorage.getItem('feriados_data');
+            const ultimaActualizacion = localStorage.getItem('feriados_ultima_actualizacion');
+            
+            if (feriadosData) {
+                try {
+                    const feriados = parseFeriados(feriadosData);
+                    mostrarFeriadoCached(feriados, ultimaActualizacion);
+                } catch (e) {
+                    console.error('Error al procesar datos en caché:', e);
+                    mostrarErrorCache();
+                }
+            } else {
+                mostrarErrorCache();
+            }
+            
+            // Verificar conexión periódicamente
+            window.addEventListener('online', function() {
+                document.querySelector('.offline-message').textContent = '¡Conexión restaurada!';
+                document.querySelector('.offline-description').textContent = 
+                    'Tu conexión a internet ha sido restaurada. Puedes continuar navegando normalmente.';
+                
+                // Redirigir a la página principal después de un breve retraso
+                setTimeout(function() {
+                    window.location.href = '/';
+                }, 2000);
+            });
+        });
+
+        function parseFeriados(data) {
+            const feriados = [];
+            const lines = data.split('\n');
+            for (let line of lines) {
+                if (line.trim() === '') continue;
+                const [nombre, fecha] = line.split(',');
+                try {
+                    const fechaObj = new Date(fecha.trim());
+                    feriados.push({ nombre, fecha: fechaObj });
+                } catch (e) {
+                    console.error(`Error al procesar la fecha para: ${nombre}`, e);
+                }
+            }
+            return feriados;
+        }
+
+        function mostrarFeriadoCached(feriados, ultimaActualizacion) {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            
+            // Encontrar el próximo feriado
+            let proximoFeriado = null;
+            for (let feriado of feriados) {
+                if (feriado.fecha >= hoy) {
+                    proximoFeriado = feriado;
+                    break;
+                }
+            }
+            
+            const cachedElement = document.getElementById("cached-feriado");
+            
+            if (proximoFeriado) {
+                const diasFaltantes = Math.ceil((proximoFeriado.fecha - hoy) / (1000 * 60 * 60 * 24));
+                const fechaFormateada = formatearFecha(proximoFeriado.fecha);
+                
+                let html = '';
+                
+                if (diasFaltantes === 0) {
+                    html = `<p><strong>¡Hoy es feriado!</strong> Se celebra "${proximoFeriado.nombre}".</p>`;
+                } else {
+                    html = `<p><strong>Próximo feriado:</strong> ${proximoFeriado.nombre}</p>
+                           <p><strong>Fecha:</strong> ${fechaFormateada}</p>
+                           <p><strong>Faltan:</strong> ${diasFaltantes} días</p>`;
+                }
+                
+                if (ultimaActualizacion) {
+                    const fecha = new Date(ultimaActualizacion);
+                    html += `<p class="update-time"><small>Última actualización: ${fecha.toLocaleString('es-AR')}</small></p>`;
+                }
+                
+                cachedElement.innerHTML = html;
+            } else {
+                cachedElement.innerHTML = "<p>No hay información disponible sobre próximos feriados.</p>";
+            }
+        }
+
+        function mostrarErrorCache() {
+            document.getElementById("cached-feriado").innerHTML = 
+                "<p>No hay información de feriados almacenada en caché. Necesitas conectarte a internet al menos una vez para guardar los datos.</p>";
+        }
+
+        function formatearFecha(fecha) {
+            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+            
+            const diaSemana = dias[fecha.getDay()];
+            const dia = fecha.getDate();
+            const mes = meses[fecha.getMonth()];
+            const año = fecha.getFullYear();
+            
+            return `${diaSemana} ${dia} de ${mes} de ${año}`;
+        }
+    </script>
+</body>
+</html>

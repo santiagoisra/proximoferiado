@@ -19,7 +19,16 @@ function mostrarCalendario(mes, año, feriados) {
     calendario.innerHTML = generarCalendario(mes, año, feriados);
 
     // Reasignar eventos a las flechas después de actualizar el calendario
-    document.querySelector('.arrow-left').addEventListener('click', function() {
+    // Usamos selectores más específicos para asegurarnos de que estamos seleccionando las flechas del selector de mes
+    const flechaIzquierda = calendario.querySelector('.selector-mes .arrow-left');
+    const flechaDerecha = calendario.querySelector('.selector-mes .arrow-right');
+
+    if (!flechaIzquierda || !flechaDerecha) {
+        console.error("No se encontraron las flechas de navegación");
+        return;
+    }
+
+    flechaIzquierda.addEventListener('click', function() {
         if (mes === 0) {
             mes = 11;
             año -= 1;
@@ -29,7 +38,7 @@ function mostrarCalendario(mes, año, feriados) {
         actualizarCalendarioYLista(mes, año, feriados);
     });
 
-    document.querySelector('.arrow-right').addEventListener('click', function() {
+    flechaDerecha.addEventListener('click', function() {
         if (mes === 11) {
             mes = 0;
             año += 1;
@@ -44,15 +53,25 @@ function generarCalendario(mes, año, feriados) {
     const diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-    let tabla = `<table><caption><span class="arrow arrow-left">&#9664;</span>${meses[mes]} ${año}<span class="arrow arrow-right">&#9654;</span></caption><thead><tr>`;
-    diasSemana.forEach(dia => tabla += `<th>${dia}</th>`);
-    tabla += `</tr></thead><tbody><tr>`;
+    // Primero creamos el selector de mes/año fuera de la tabla
+    let contenido = `
+    <div class="selector-mes">
+        <span class="arrow arrow-left">&#9664;</span>
+        <span class="mes-anio">${meses[mes]} ${año}</span>
+        <span class="arrow arrow-right">&#9654;</span>
+    </div>
+    <table>
+        <thead><tr>`;
+
+    // Luego agregamos los encabezados de los días de la semana
+    diasSemana.forEach(dia => contenido += `<th>${dia}</th>`);
+    contenido += `</tr></thead><tbody><tr>`;
 
     const primerDiaMes = new Date(año, mes, 1);
     const diaSemana = primerDiaMes.getDay();
 
     for (let i = 0; i < diaSemana; i++) {
-        tabla += `<td></td>`;
+        contenido += `<td></td>`;
     }
 
     const ultimoDiaMes = new Date(año, mes + 1, 0).getDate();
@@ -65,13 +84,8 @@ function generarCalendario(mes, año, feriados) {
         const esFinDeSemana = (diaSemanaActual === 0 || diaSemanaActual === 6);
 
         // Verificar si es feriado
-        let feriadoEncontrado = null;
         const esFeriado = feriados.some(feriado => {
-            const coincide = feriado.fecha.toDateString() === fechaActual.toDateString();
-            if (coincide) {
-                feriadoEncontrado = feriado;
-            }
-            return coincide;
+            return feriado.fecha.toDateString() === fechaActual.toDateString();
         });
 
         const esHoy = esHoyMesActual && dia === hoy.getDate();
@@ -79,33 +93,40 @@ function generarCalendario(mes, año, feriados) {
         let clase = '';
         if (esFeriado) {
             if (esFinDeSemana) {
-                clase += 'feriado-finde ';
+                clase = 'feriado-finde ';
             } else {
-                clase += 'feriado ';
+                clase = 'feriado ';
             }
         }
         if (esHoy) clase += 'hoy';
 
-        tabla += `<td class="${clase}">${dia}</td>`;
+        contenido += `<td class="${clase}">${dia}</td>`;
 
         if ((dia + diaSemana) % 7 === 0 && dia !== ultimoDiaMes) {
-            tabla += `</tr><tr>`;
+            contenido += `</tr><tr>`;
         }
     }
 
-    tabla += `</tr></tbody></table>`;
+    contenido += `</tr></tbody></table>`;
 
-    return tabla;
+    return contenido;
 }
 
 function mostrarListaFeriados(mes, año, feriados) {
     const listaFeriados = document.getElementById("listaFeriados");
-    listaFeriados.innerHTML = '';
+    listaFeriados.innerHTML = '<h2>Feriados del mes</h2>';
 
     const feriadosMesActual = feriados.filter(feriado => {
         const fecha = feriado.fecha;
         return fecha.getMonth() === mes && fecha.getFullYear() === año;
     });
+
+    if (feriadosMesActual.length === 0) {
+        const noFeriados = document.createElement('div');
+        noFeriados.textContent = 'No hay feriados este mes';
+        listaFeriados.appendChild(noFeriados);
+        return;
+    }
 
     feriadosMesActual.forEach(feriado => {
         const feriadoItem = document.createElement('div');
@@ -132,12 +153,19 @@ function mostrarListaFeriados(mes, año, feriados) {
             const indicador = document.createElement('span');
             indicador.classList.add('indicador-finde');
             indicador.textContent = '(fin de semana)';
-            fecha.appendChild(document.createElement('br'));
-            fecha.appendChild(indicador);
+
+            // Crear un nuevo elemento para el indicador en lugar de agregarlo al texto
+            const indicadorContainer = document.createElement('div');
+            indicadorContainer.appendChild(indicador);
+
+            feriadoItem.appendChild(nombre);
+            feriadoItem.appendChild(fecha);
+            feriadoItem.appendChild(indicadorContainer);
+        } else {
+            feriadoItem.appendChild(nombre);
+            feriadoItem.appendChild(fecha);
         }
 
-        feriadoItem.appendChild(nombre);
-        feriadoItem.appendChild(fecha);
         listaFeriados.appendChild(feriadoItem);
     });
 }
@@ -156,4 +184,15 @@ function formatearFecha(fecha) {
     const año = fecha.getFullYear();
 
     return `${diaSemana} ${dia} de ${mes} ${año}`;
+}
+
+function parseFeriados(data) {
+    const feriados = [];
+    const lines = data.split('\n');
+    for (let line of lines) {
+        if (line.trim() === '') continue; // Ignorar líneas vacías
+        const [nombre, fecha] = line.split(',');
+        feriados.push({ nombre, fecha: moment.tz(fecha.trim(), 'America/Argentina/Buenos_Aires').toDate() });
+    }
+    return feriados;
 }

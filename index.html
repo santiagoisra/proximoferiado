@@ -7,9 +7,19 @@
     <meta name="description" content="Descubrí cuál es el próximo feriado en Argentina y cuántos días faltan para este.">
     <meta name="keywords" content="feriados, próximos feriados, Argentina, días no laborables, calendario, feriados nacionales">
     <meta name="author" content="Efecto - Agencia Digital">
-    <link rel="stylesheet" href="styles.css?v=1.4">
-    <script src="script.js?v=1.2"></script>
+    <link rel="stylesheet" href="styles_new.css?v=2.1">
     <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <!-- SEO y Open Graph -->
+    <meta property="og:title" content="Próximo Feriado Argentina 2025 | Calendario Oficial">
+    <meta property="og:description" content="Descubrí cuándo es el próximo feriado en Argentina y cuántos días faltan. Calendario completo de feriados nacionales.">
+    <meta property="og:url" content="https://proximoferiado.com.ar/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
+
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0056b3">
 </head>
 <body>
     <header>
@@ -25,7 +35,8 @@
         <div id="feriado"></div>
         <button id="verCalendarioBtn">Ver calendario</button>
     </div>
-    <br>
+
+    <footer>
         Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank">Efecto - Agencia Digital</a></br>
         <a href='https://cafecito.app/efectod' rel='noopener' target='_blank'><img srcset='https://cdn.cafecito.app/imgs/buttons/button_5.png 1x, https://cdn.cafecito.app/imgs/buttons/button_5_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_5_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_5.png' alt='Invitame un café en cafecito.app' /></a>
     </footer>
@@ -42,8 +53,22 @@
     </div>
 
     <!-- Scripts JS al final del body -->
-    <script src="calendario.js?v=1.2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+    <script src="script.js?v=2.1"></script>
+    <script src="calendario.js?v=2.1"></script>
+
+    <!-- Service Worker para PWA -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('Service Worker registrado con éxito:', registration.scope);
+                }).catch(function(error) {
+                    console.log('Registro de Service Worker fallido:', error);
+                });
+            });
+        }
+    </script>
 </body>
 </html>
