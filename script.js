@@ -180,7 +180,9 @@ function mostrarProximoFeriado(feriados) {
             }
 
             introElement.textContent = "Faltan";
-            restoElement.textContent = "para el próximo feriado";
+            // Determinar si es singular o plural
+            const diaTexto = diasFaltantes === 1 ? " día" : " días";
+            restoElement.textContent = `para el próximo feriado`;
 
             if (diasFaltantes === 0) {
                 // Calcular el próximo feriado después del día de hoy
@@ -194,9 +196,10 @@ function mostrarProximoFeriado(feriados) {
 
                 if (proximoFeriadoDespuesDeHoy) {
                     const diasFaltantesProximo = Math.ceil((proximoFeriadoDespuesDeHoy.fecha - hoy) / (1000 * 60 * 60 * 24));
+                    const diaTextoProximo = diasFaltantesProximo === 1 ? " Día" : " Días";
                     numeroElement.textContent = "¡Hoy es feriado!";
                     introElement.textContent = "";
-                    restoElement.textContent = `Faltan ${diasFaltantesProximo} días para el próximo feriado.`;
+                    restoElement.textContent = `Faltan ${diasFaltantesProximo}${diaTextoProximo} para el próximo feriado.`;
                 } else {
                     numeroElement.textContent = "¡Hoy es feriado!";
                     introElement.textContent = "";
@@ -206,19 +209,20 @@ function mostrarProximoFeriado(feriados) {
                 // Si el próximo feriado cae en fin de semana y hay un feriado en día laborable después
                 const fechaLaborable = proximoFeriadoDiaLaborable.fecha;
                 const diasFaltantesLaborable = Math.ceil((fechaLaborable - hoy) / (1000 * 60 * 60 * 24));
+                const diaTextoLaborable = diasFaltantesLaborable === 1 ? " Día" : " Días";
                 console.log(`Días faltantes para el feriado laborable: ${diasFaltantesLaborable}`);
 
                 // Mostrar el feriado en día laborable como el principal
-                numeroElement.textContent = `${diasFaltantesLaborable}`;
+                numeroElement.textContent = `${diasFaltantesLaborable}${diaTextoLaborable}`;
 
                 if (feriadoLargo) {
                     introElement.textContent = `¡El próximo feriado es largo de ${diasLargo} días!`;
                 }
             } else if (feriadoLargo) {
-                numeroElement.textContent = `${diasFaltantes}`;
+                numeroElement.textContent = `${diasFaltantes}${diaTexto}`;
                 introElement.textContent = `¡El próximo feriado es largo de ${diasLargo} días!`;
             } else {
-                numeroElement.textContent = `${diasFaltantes}`;
+                numeroElement.textContent = `${diasFaltantes}${diaTexto}`;
             }
 
             // Construir el HTML para mostrar el feriado

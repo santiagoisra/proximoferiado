@@ -142,8 +142,9 @@
                     document.getElementById("feriado-dato").textContent = 
                         `¡Hoy es feriado! Se celebra "${proximoFeriado.nombre}".`;
                 } else {
+                    const diaTexto = diasFaltantes === 1 ? "día" : "días";
                     document.getElementById("feriado-dato").textContent = 
-                        `El próximo feriado es "${proximoFeriado.nombre}" el ${fechaFormateada}. ¡Faltan ${diasFaltantes} días!`;
+                        `El próximo feriado es "${proximoFeriado.nombre}" el ${fechaFormateada}. ¡Faltan ${diasFaltantes} ${diaTexto}!`;
                 }
             } else {
                 document.getElementById("feriado-dato").textContent = 
