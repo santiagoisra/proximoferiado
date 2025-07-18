@@ -20,8 +20,8 @@ function mostrarCalendario(mes, año, feriados) {
 
     // Reasignar eventos a las flechas después de actualizar el calendario
     // Usamos selectores más específicos para asegurarnos de que estamos seleccionando las flechas del selector de mes
-    const flechaIzquierda = calendario.querySelector('.selector-mes .arrow-left');
-    const flechaDerecha = calendario.querySelector('.selector-mes .arrow-right');
+    const flechaIzquierda = calendario.querySelector('.arrows-container .arrow-left');
+    const flechaDerecha = calendario.querySelector('.arrows-container .arrow-right');
 
     if (!flechaIzquierda || !flechaDerecha) {
         console.error("No se encontraron las flechas de navegación");
@@ -56,9 +56,11 @@ function generarCalendario(mes, año, feriados) {
     // Primero creamos el selector de mes/año fuera de la tabla
     let contenido = `
     <div class="selector-mes">
-        <span class="arrow arrow-left">&#9664;</span>
         <span class="mes-anio">${meses[mes]} ${año}</span>
-        <span class="arrow arrow-right">&#9654;</span>
+        <div class="arrows-container">
+            <span class="arrow arrow-left">&#9664;</span>
+            <span class="arrow arrow-right">&#9654;</span>
+        </div>
     </div>
     <table>
         <thead><tr>`;

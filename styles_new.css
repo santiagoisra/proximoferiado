@@ -278,8 +278,15 @@ header h1 {
 #calendario .selector-mes .mes-anio {
   font-size: var(--font-size-medium);
   font-weight: 700;
+  text-align: left;
   flex-grow: 1;
-  text-align: center;
+}
+
+/* Contenedor para las flechas */
+#calendario .arrows-container {
+  display: flex;
+  align-items: center;
+  gap: 50px; /* Separación de 50px entre las flechas */
 }
 
 #calendario .arrow {
@@ -294,8 +301,8 @@ header h1 {
   transition: all var(--transition-speed) ease;
   width: 30px;
   height: 30px;
-  /* Añadimos margen horizontal para separar las flechas del texto */
-  margin: 0 var(--spacing-sm);
+  /* Removemos los márgenes ya que ahora usamos gap en el contenedor */
+  margin: 0;
 }
 
 #calendario .arrow:hover {
@@ -304,7 +311,7 @@ header h1 {
 }
 
 #calendario .feriado {
-  background-color: var(--color-highlight);
+  background-color: var(--color-secondary) !important; /* Azul celeste para feriados normales - Actualizado */
   color: var(--color-bg);
   font-weight: 600;
 }
@@ -316,7 +323,7 @@ td.feriado-finde {
 }
 
 #calendario .hoy {
-  background-color: var(--color-secondary) !important;
+  background-color: var(--color-highlight) !important; /* Naranja para el día actual */
   color: var(--color-bg);
   font-weight: bold;
 }
@@ -441,6 +448,44 @@ footer a:hover {
 
   .modal-content {
     padding: var(--spacing-sm);
+    padding-top: 2.5rem; /* Espacio reducido pero suficiente para el botón */
+    position: relative;
+  }
+
+  .close {
+    position: fixed; /* Cambiar a fixed para que no interfiera con el contenido */
+    top: 10px;
+    right: 10px;
+    z-index: 1002; /* Z-index más alto */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  }
+
+  /* Calendario con margen reducido */
+  #calendario {
+    margin-top: 0.5rem; /* Margen mínimo */
+  }
+
+  /* Selector de mes con espaciado más compacto */
+  #calendario .selector-mes {
+    margin-top: 0.5rem; /* Margen reducido */
+    padding: 6px 0; /* Padding más compacto */
+    margin-bottom: 0.75rem; /* Margen inferior reducido */
+  }
+
+  /* Reducir la separación entre flechas en móviles pero mantener funcionalidad */
+  #calendario .arrows-container {
+    gap: 25px; /* Reducir aún más para dar espacio */
+  }
+
+  /* Hacer las flechas un poco más pequeñas en móviles */
+  #calendario .arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
   }
 
   #calendario, #listaFeriados {
@@ -450,7 +495,8 @@ footer a:hover {
   .modal-body {
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
+    padding-top: 0.1rem;
   }
 
   #listaFeriados {
