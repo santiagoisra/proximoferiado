@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     console.log("DOM cargado, iniciando aplicación...");
 
-    fetch('feriados.txt')
+    // Agregamos un timestamp para evitar el caché del Service Worker antiguo
+    fetch('feriados.txt?v=' + new Date().getTime())
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}`);

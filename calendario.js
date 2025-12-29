@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('feriados.txt')
+    // Agregamos un timestamp para evitar el caché del Service Worker antiguo
+    fetch('feriados.txt?v=' + new Date().getTime())
         .then(response => response.text())
         .then(data => {
             const feriados = parseFeriados(data);
