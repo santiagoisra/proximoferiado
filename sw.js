@@ -67,7 +67,47 @@ self.addEventListener('activate', event => {
 
 // Interceptar solicitudes de red
 self.addEventListener('fetch', event => {
-  // Estrategia: Cache con fallback a red
+  // Ignorar peticiones a /v1/models (probablemente de extensiones)
+  if (event.request.url.includes('/v1/models')) {
+    return fetch(event.request);
+  }
+
+  // Estrategia específica para feriados.txt: Network First (Red primero, luego caché)
+  // Esto asegura que los usuarios siempre vean la última versión si tienen conexión
+  if (event.request.url.includes('feriados.txt')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          // Si la respuesta es válida, la guardamos en caché y la devolvemos
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+            return networkResponse;
+          }
+          // Si el servidor devuelve error, intentamos usar el caché
+          return caches.match(event.request);
+        })
+        .catch(() => {
+          // Si hay error de red (offline), usamos el caché
+          return caches.match(event.request)
+            .then(cachedResponse => {
+              if (cachedResponse) {
+                return cachedResponse;
+              }
+              // Si no hay caché, devolver fallback
+              return new Response(
+                'Año Nuevo,2025-01-01\nCarnaval,2025-03-03\nCarnaval,2025-03-04',
+                { headers: { 'Content-Type': 'text/plain' } }
+              );
+            });
+        })
+    );
+    return;
+  }
+  
+  // Estrategia para el resto: Cache First con fallback a red
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
