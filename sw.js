@@ -6,16 +6,18 @@
  * y mejora el rendimiento mediante el cacheo de recursos.
  */
 
-const CACHE_NAME = 'proximoferiado-v1';
+const CACHE_NAME = 'proximoferiado-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
-  '/styles.css',
+  '/styles_new.css',
   '/script.js',
   '/calendario.js',
   '/feriados.txt',
   '/images/favicon.png',
-  '/images/og-feriados-argentina.jpg',
+  '/images/apple-touch-icon.png',
+  '/images/icon-192x192.png',
+  '/images/icon-512x512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js'
 ];
