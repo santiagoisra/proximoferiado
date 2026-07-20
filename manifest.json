@@ -71,18 +71,25 @@
   ],
   "screenshots": [
     {
-      "src": "images/screenshot1.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide",
+      "src": "images/screenshot-home.png",
+      "sizes": "1082x2399",
+      "type": "image/png",
+      "form_factor": "narrow",
       "label": "Pantalla principal de Próximo Feriado Argentina"
     },
     {
-      "src": "images/screenshot2.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg",
-      "form_factor": "wide",
+      "src": "images/screenshot-calendario.png",
+      "sizes": "1082x2399",
+      "type": "image/png",
+      "form_factor": "narrow",
       "label": "Calendario de feriados"
+    },
+    {
+      "src": "images/screenshot-desktop.png",
+      "sizes": "3404x1978",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Próximo Feriado Argentina en escritorio"
     }
   ],
   "categories": ["utilities", "productivity", "lifestyle"],
