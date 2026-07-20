@@ -1,0 +1,47 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Logs and temp files
+*.log
+npm-debug.log*
+*.tmp
+*.bak
+*.orig
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Node — nothing is bundled today, but keep tooling output out if it is added
+node_modules/
+.cache/
+dist/
+
+# Local agent and tooling metadata
+.atl/
+.claude/settings.local.json
+CLAUDE.local.md
