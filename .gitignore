@@ -45,3 +45,6 @@ dist/
 .atl/
 .claude/settings.local.json
 CLAUDE.local.md
+
+# ODD feature tracking (internal; repo root is the served document root)
+odd/
