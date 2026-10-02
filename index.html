@@ -1,81 +1,124 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-AR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Próximo Feriado en Argentina</title>
-    <meta name="description" content="Descubrí cuál es el próximo feriado en Argentina y cuántos días faltan para este.">
+    <meta name="color-scheme" content="light dark">
+    <title>Próximo feriado en Argentina: cuántos días faltan</title>
+    <meta name="description" content="Cuántos días faltan para el próximo feriado en Argentina, con fines de semana largos, puentes turísticos y el calendario del año completo.">
     <meta name="keywords" content="feriados, próximos feriados, Argentina, días no laborables, calendario, feriados nacionales">
     <meta name="author" content="Efecto - Agencia Digital">
-    <link rel="stylesheet" href="styles_new.css?v=2.1">
+    <link rel="canonical" href="https://proximoferiado.com.ar/">
+    <link rel="stylesheet" href="css/app.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 
     <!-- SEO y Open Graph -->
-    <meta property="og:title" content="Próximo Feriado Argentina 2025 | Calendario Oficial">
-    <meta property="og:description" content="Descubrí cuándo es el próximo feriado en Argentina y cuántos días faltan. Calendario completo de feriados nacionales.">
+    <meta property="og:title" content="Próximo feriado en Argentina: cuántos días faltan">
+    <meta property="og:description" content="Cuántos días faltan para el próximo feriado, los fines de semana largos y el calendario completo de feriados nacionales.">
     <meta property="og:url" content="https://proximoferiado.com.ar/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="Próximo Feriado">
+    <meta property="og:image" content="https://proximoferiado.com.ar/images/icon-512x512.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Próximo feriado en Argentina: cuántos días faltan">
+    <meta name="twitter:description" content="Cuántos días faltan para el próximo feriado, los fines de semana largos y el calendario completo de feriados nacionales.">
+    <meta name="twitter:image" content="https://proximoferiado.com.ar/images/icon-512x512.png">
 
     <!-- Manifest para PWA -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#F7F5EF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0A1428" media="(prefers-color-scheme: dark)">
 
     <!-- Pantalla de inicio en iOS (Safari no lee el manifest antes de iOS 16.4) -->
     <meta name="apple-mobile-web-app-title" content="Feriados AR">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <noscript><style>.hero--skeleton { display: none; }</style></noscript>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/register-sw.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Próximo Feriado en Argentina</h1>
-    </header>
-    <div class="container">
-        <div id="diasFaltantes">
-            <span class="intro">Faltan</span>
-            <span class="numero"></span>
-            <span class="resto">para el próximo feriado</span>
-            <div class="separator"></div>
-        </div>
-        <div id="feriado"></div>
-        <button id="verCalendarioBtn">Ver calendario</button>
-    </div>
+    <a class="skip-link" href="#main">Ir al contenido</a>
 
-    <footer>
-        Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank">Efecto - Agencia Digital</a></br>
-        <a href='https://cafecito.app/efectod' rel='noopener' target='_blank'><img srcset='https://cdn.cafecito.app/imgs/buttons/button_5.png 1x, https://cdn.cafecito.app/imgs/buttons/button_5_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_5_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_5.png' alt='Invitame un café en cafecito.app' /></a>
-    </footer>
-
-    <!-- Modal -->
-    <div id="calendarioModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="modal-body">
-                <div id="calendario"></div>
-                <div id="listaFeriados"></div>
+    <div class="shell">
+        <header class="site-header">
+            <div class="brand">
+                <img class="brand-logo" src="images/favicon.png" alt="" width="44" height="44">
+                <div>
+                    <h1 class="brand-name">Próximo Feriado</h1>
+                    <p class="brand-tag">Cuántos días faltan para el próximo feriado</p>
+                </div>
             </div>
-        </div>
+
+            <div class="tabs" role="tablist" aria-label="Secciones">
+                <button type="button" class="tab" role="tab" id="tab-inicio" aria-controls="panel-inicio" aria-selected="true" data-view="inicio">Inicio</button>
+                <button type="button" class="tab" role="tab" id="tab-calendario" aria-controls="panel-calendario" aria-selected="false" tabindex="-1" data-view="calendario">Calendario</button>
+                <button type="button" class="tab" role="tab" id="tab-largos" aria-controls="panel-largos" aria-selected="false" tabindex="-1" data-view="largos">Fines largos</button>
+            </div>
+        </header>
+
+        <main id="main" class="main">
+            <div class="yearbar" id="yearbar" hidden>
+                <div class="yearnav" role="group" aria-label="Año">
+                    <button type="button" class="iconbtn" id="year-prev" data-year-step="-1" aria-label="Año anterior">
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <output class="year-label" id="year-label"></output>
+                    <button type="button" class="iconbtn" id="year-next" data-year-step="1" aria-label="Año siguiente">
+                        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+                <button type="button" class="btn btn--outline" data-action="download-year">
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Descargar calendario (.ics)
+                </button>
+            </div>
+            <p class="notice" id="year-notice" hidden></p>
+
+            <section id="panel-inicio" class="panel" role="tabpanel" aria-labelledby="tab-inicio" tabindex="0">
+                <div id="inicio-root">
+                    <noscript><p class="notice">Activá JavaScript para ver cuántos días faltan para el próximo feriado y consultar el calendario completo.</p></noscript>
+                    <div class="inicio-grid">
+                        <article class="hero hero--skeleton" aria-busy="true">
+                            <p class="hero-label">Próximo feriado</p>
+                            <div class="sk sk-num" aria-hidden="true"></div>
+                            <div class="sk sk-line" aria-hidden="true"></div>
+                            <div class="sk sk-line sk-line--short" aria-hidden="true"></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panel-calendario" class="panel" role="tabpanel" aria-labelledby="tab-calendario" tabindex="0" hidden>
+                <h2 class="sr-only">Calendario anual</h2>
+                <ul class="legend" aria-label="Referencias">
+                    <li><span class="sw sw-f" aria-hidden="true">12</span> Feriado</li>
+                    <li><span class="sw sw-p" aria-hidden="true">12</span> Puente turístico</li>
+                    <li><span class="sw sw-n" aria-hidden="true">12</span> Día no laborable (optativo)</li>
+                    <li><span class="sw sw-today" aria-hidden="true">12</span> Hoy</li>
+                    <li><span class="sw sw-we" aria-hidden="true">12</span> Fin de semana</li>
+                </ul>
+                <div id="calendario-root"></div>
+            </section>
+
+            <section id="panel-largos" class="panel" role="tabpanel" aria-labelledby="tab-largos" tabindex="0" hidden>
+                <h2 class="sr-only">Fines de semana largos</h2>
+                <div id="largos-root"></div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p class="credit">Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank" rel="noopener">Efecto - Agencia Digital</a></p>
+            <a href='https://cafecito.app/efectod' rel='noopener' target='_blank'><img srcset='https://cdn.cafecito.app/imgs/buttons/button_5.png 1x, https://cdn.cafecito.app/imgs/buttons/button_5_2x.png 2x, https://cdn.cafecito.app/imgs/buttons/button_5_3.75x.png 3.75x' src='https://cdn.cafecito.app/imgs/buttons/button_5.png' alt='Invitame un café en cafecito.app' /></a>
+            <p class="data-status" id="data-status"></p>
+            <p class="legal">Feriados nacionales según la Ley 27.399 y decretos vigentes. Las provincias y municipios pueden tener feriados propios.</p>
+        </footer>
     </div>
 
-    <!-- Scripts JS al final del body -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
-    <script src="script.js?v=2.2"></script>
-    <script src="calendario.js?v=2.2"></script>
-
-    <!-- Service Worker para PWA -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                    console.log('Service Worker registrado con éxito:', registration.scope);
-                }).catch(function(error) {
-                    console.log('Registro de Service Worker fallido:', error);
-                });
-            });
-        }
-    </script>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
