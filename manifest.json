@@ -73,14 +73,14 @@
   "screenshots": [
     {
       "src": "images/screenshot-home.png",
-      "sizes": "1082x2399",
+      "sizes": "1082x2400",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Pantalla principal de Próximo Feriado Argentina"
     },
     {
       "src": "images/screenshot-calendario.png",
-      "sizes": "1082x2399",
+      "sizes": "1082x2400",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Calendario de feriados"
