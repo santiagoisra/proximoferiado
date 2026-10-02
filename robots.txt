@@ -3,11 +3,11 @@
 
 User-agent: *
 Allow: /
-Disallow: /private/
 
 # Permitir a todos los rastreadores acceder a los recursos estáticos
 Allow: /images/
-Allow: /styles.css
+Allow: /css/
+Allow: /js/
 Allow: /manifest.json
 
 # Sitemap
