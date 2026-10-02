@@ -1,215 +1,150 @@
 /**
- * Próximo Feriado Argentina - Service Worker
- * Versión: 1.0
- * 
- * Este Service Worker permite que la aplicación funcione offline
- * y mejora el rendimiento mediante el cacheo de recursos.
+ * Próximo Feriado - service worker.
+ *
+ * The site deploys straight from `main` with no build step, so shipped code must never go stale:
+ *  - HTML, JS, CSS and JSON are network-first and revalidated (the CDN's HTTP cache would otherwise serve
+ *    old code for up to 10 minutes); the saved copy is only the offline fallback.
+ *  - Images are cache-first with a background refresh.
+ *  - Cross-origin requests (ArgentinaDatos, Cafecito) and non-GET requests are never intercepted: the app
+ *    keeps its own localStorage cache for the data.
+ * Bump VERSION to drop every cached file on the next activation.
  */
+'use strict';
 
-const CACHE_NAME = 'proximoferiado-v2';
-const ASSETS_TO_CACHE = [
+const VERSION = 'v3';
+const CACHE = `proximoferiado-${VERSION}`;
+const NETWORK_TIMEOUT_MS = 4000;
+
+// The app shell. Installing fails if any of these fails, so every entry must exist in the repo
+// (tests/sw.test.js checks the list against the disk and against the module graph).
+const REQUIRED = [
   '/',
   '/index.html',
-  '/styles_new.css',
-  '/script.js',
-  '/calendario.js',
-  '/feriados.txt',
+  '/offline.html',
+  '/css/app.css',
+  '/js/app.js',
+  '/js/data-source.js',
+  '/js/dates.js',
+  '/js/feriados.js',
+  '/js/puentes-seed.js',
+  '/js/register-sw.js',
+  '/js/render.js',
+  '/js/view-state.js',
+  '/manifest.json',
+];
+
+// Nice to have: a missing or failing image must not abort the install.
+const OPTIONAL = [
   '/images/favicon.png',
   '/images/apple-touch-icon.png',
   '/images/icon-192x192.png',
   '/images/icon-512x512.png',
-  'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js'
 ];
 
-// Instalación del Service Worker
-self.addEventListener('install', event => {
-  console.log('[Service Worker] Instalando...');
-  
-  // Precarga de recursos en caché
+// `reload` skips the HTTP cache so a fresh install never mixes files from two deploys.
+const fresh = (path) => new Request(path, { cache: 'reload' });
+
+async function precache() {
+  const cache = await caches.open(CACHE);
+  await cache.addAll(REQUIRED.map(fresh));
+  await Promise.allSettled(OPTIONAL.map((path) => cache.add(fresh(path))));
+}
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(precache().then(() => self.skipWaiting()));
+});
+
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Cacheando recursos');
-        return cache.addAll(ASSETS_TO_CACHE);
-      })
-      .then(() => {
-        console.log('[Service Worker] Instalación completada');
-        return self.skipWaiting();
-      })
-      .catch(error => {
-        console.error('[Service Worker] Error durante la instalación:', error);
-      })
+    caches
+      .keys()
+      .then((names) => Promise.all(names.filter((name) => name !== CACHE).map((name) => caches.delete(name))))
+      .then(() => self.clients.claim()),
   );
 });
 
-// Activación del Service Worker
-self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activando...');
-  
-  // Limpiar cachés antiguos
-  event.waitUntil(
-    caches.keys()
-      .then(cacheNames => {
-        return Promise.all(
-          cacheNames.map(cacheName => {
-            if (cacheName !== CACHE_NAME) {
-              console.log('[Service Worker] Eliminando caché antiguo:', cacheName);
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-      .then(() => {
-        console.log('[Service Worker] Activación completada');
-        return self.clients.claim();
-      })
-  );
-});
+// ---------------------------------------------------------------- fetch
 
-// Interceptar solicitudes de red
-self.addEventListener('fetch', event => {
-  // Ignorar peticiones a /v1/models (probablemente de extensiones)
-  if (event.request.url.includes('/v1/models')) {
-    return fetch(event.request);
+const REVALIDATED = /\.(?:html|js|css|json)$/;
+
+const isDocument = (request, url) => request.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html');
+
+const isCacheable = (response) => response.status === 200 && response.type === 'basic';
+
+function remember(event, cache, key, response) {
+  if (isCacheable(response)) event.waitUntil(cache.put(key, response.clone()).catch(() => {}));
+}
+
+/** Network request that bypasses the HTTP cache and gives up after NETWORK_TIMEOUT_MS. */
+async function fetchFresh(request) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), NETWORK_TIMEOUT_MS);
+  try {
+    return await fetch(request, { cache: 'no-cache', signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
   }
+}
 
-  // Estrategia específica para feriados.txt: Network First (Red primero, luego caché)
-  // Esto asegura que los usuarios siempre vean la última versión si tienen conexión
-  if (event.request.url.includes('feriados.txt')) {
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          // Si la respuesta es válida, la guardamos en caché y la devolvemos
-          if (networkResponse && networkResponse.status === 200) {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-            return networkResponse;
-          }
-          // Si el servidor devuelve error, intentamos usar el caché
-          return caches.match(event.request);
-        })
-        .catch(() => {
-          // Si hay error de red (offline), usamos el caché
-          return caches.match(event.request)
-            .then(cachedResponse => {
-              if (cachedResponse) {
-                return cachedResponse;
-              }
-              // Si no hay caché, devolver fallback
-              return new Response(
-                'Año Nuevo,2025-01-01\nCarnaval,2025-03-03\nCarnaval,2025-03-04',
-                { headers: { 'Content-Type': 'text/plain' } }
-              );
-            });
-        })
-    );
-    return;
-  }
-  
-  // Estrategia para el resto: Cache First con fallback a red
-  event.respondWith(
-    caches.match(event.request)
-      .then(cachedResponse => {
-        // Si el recurso está en caché, devolverlo
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-        
-        // Si no está en caché, buscarlo en la red
-        return fetch(event.request)
-          .then(networkResponse => {
-            // Si la respuesta no es válida, devolver un error
-            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-              return networkResponse;
-            }
-            
-            // Clonar la respuesta para poder almacenarla en caché
-            const responseToCache = networkResponse.clone();
-            
-            // Almacenar la respuesta en caché para futuras solicitudes
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-            
-            return networkResponse;
-          })
-          .catch(error => {
-            console.error('[Service Worker] Error al recuperar recurso:', error);
-            
-            // Si es una solicitud de feriados.txt y falla, devolver una respuesta de fallback
-            if (event.request.url.includes('feriados.txt')) {
-              return new Response(
-                'Año Nuevo,2025-01-01\nCarnaval,2025-03-03\nCarnaval,2025-03-04',
-                { headers: { 'Content-Type': 'text/plain' } }
-              );
-            }
-            
-            // Para otras solicitudes, mostrar una página de error
-            if (event.request.mode === 'navigate') {
-              return caches.match('/offline.html')
-                .then(offlineResponse => {
-                  return offlineResponse || new Response(
-                    '<html><body><h1>Estás offline</h1><p>No se pudo cargar el contenido solicitado.</p></body></html>',
-                    { headers: { 'Content-Type': 'text/html' } }
-                  );
-                });
-            }
-          });
-      })
-  );
-});
-
-// Sincronización en segundo plano
-self.addEventListener('sync', event => {
-  if (event.tag === 'sync-feriados') {
-    event.waitUntil(
-      fetch('feriados.txt')
-        .then(response => response.text())
-        .then(data => {
-          // Almacenar los datos actualizados en IndexedDB o localStorage
-          self.clients.matchAll().then(clients => {
-            clients.forEach(client => {
-              client.postMessage({
-                type: 'feriados-updated',
-                data: data
-              });
-            });
-          });
-        })
-        .catch(error => {
-          console.error('[Service Worker] Error en sincronización:', error);
-        })
-    );
-  }
-});
-
-// Notificaciones push
-self.addEventListener('push', event => {
-  const data = event.data.json();
-  
-  const options = {
-    body: data.body || 'Próximo feriado en Argentina',
-    icon: '/images/favicon.png',
-    badge: '/images/favicon.png',
-    data: {
-      url: data.url || '/'
+async function networkFirst(event, request, url) {
+  const cache = await caches.open(CACHE);
+  // Pages are stored by pathname so "/?v=largos&a=2027" and friends all share the "/" entry.
+  const key = isDocument(request, url) ? url.pathname : request;
+  let serverError;
+  try {
+    const response = await fetchFresh(request);
+    if (isCacheable(response)) {
+      remember(event, cache, key, response);
+      return response;
     }
-  };
-  
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'Próximo Feriado Argentina', options)
-  );
-});
+    // 404s and redirects reach the browser untouched; only 5xx prefers the saved copy.
+    if (response.status < 500) return response;
+    serverError = response;
+  } catch {
+    // Offline, DNS failure or timeout: fall through to the saved copy.
+  }
 
-// Acción al hacer clic en una notificación
-self.addEventListener('notificationclick', event => {
-  event.notification.close();
-  
-  event.waitUntil(
-    clients.openWindow(event.notification.data.url)
-  );
+  const saved = (await cache.match(key)) ?? (await cache.match(request, { ignoreSearch: true }));
+  if (saved) return saved;
+  if (request.mode === 'navigate') {
+    // The app computes holidays on-device, so the cached shell beats the generic offline page.
+    const shell = (await cache.match('/index.html')) ?? (await cache.match('/offline.html'));
+    if (shell) return shell;
+  }
+  return serverError ?? Response.error();
+}
+
+async function cacheFirst(event, request) {
+  const cache = await caches.open(CACHE);
+  const saved = await cache.match(request);
+  const fill = () =>
+    fetch(request).then((response) => {
+      remember(event, cache, request, response);
+      return response;
+    });
+  if (saved) {
+    event.waitUntil(fill().catch(() => {}));
+    return saved;
+  }
+  try {
+    return await fill();
+  } catch {
+    return Response.error();
+  }
+}
+
+self.addEventListener('fetch', (event) => {
+  const { request } = event;
+  if (request.method !== 'GET') return;
+  if (request.cache === 'only-if-cached' && request.mode !== 'same-origin') return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname === '/sw.js') return;
+
+  if (url.pathname.startsWith('/images/')) {
+    event.respondWith(cacheFirst(event, request));
+  } else if (request.mode === 'navigate' || url.pathname === '/' || REVALIDATED.test(url.pathname)) {
+    event.respondWith(networkFirst(event, request, url));
+  }
 });
