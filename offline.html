@@ -3,366 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sin conexión | Próximo Feriado Argentina</title>
-    <meta name="description" content="No hay conexión a internet. Algunos contenidos pueden estar disponibles offline.">
+    <meta name="color-scheme" content="light dark">
+    <title>Sin conexión | Próximo Feriado</title>
+    <meta name="description" content="No hay conexión a internet. Volvé a intentarlo cuando estés en línea.">
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    
-    <style>
-        :root {
-            --color-primary: #0056b3;
-            --color-secondary: #3498db;
-            --color-accent: #004080;
-            --color-bg: #ffffff;
-            --color-bg-light: #f5f7fa;
-            --color-text: #333333;
-            --color-muted: #666666;
-            --color-border: #dddddd;
-            --font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            --border-radius: 8px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-family);
-            line-height: 1.6;
-            color: var(--color-text);
-            background-color: var(--color-bg-light);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 0;
-            margin: 0;
-        }
-        
-        header {
-            text-align: center;
-            padding: 1.5rem;
-            background-color: var(--color-primary);
-            color: var(--color-bg);
-            width: 100%;
-        }
-        
-        header h1 {
-            font-size: 1.75rem;
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-        
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            width: 100%;
-        }
-        
-        .offline-container {
-            background: var(--color-bg);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-        
-        .offline-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: var(--color-primary);
-        }
-        
-        .offline-message {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--color-text);
-        }
-        
-        .offline-description {
-            margin-bottom: 2rem;
-            color: var(--color-muted);
-        }
-        
-        .cached-data {
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: var(--color-bg-light);
-            border-radius: var(--border-radius);
-            text-align: left;
-        }
-        
-        .cached-data h3 {
-            margin-bottom: 1rem;
-            color: var(--color-primary);
-        }
-        
-        .retry-button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--color-primary);
-            color: white;
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .retry-button:hover {
-            background-color: var(--color-accent);
-        }
-        
-        footer {
-            background-color: var(--color-primary);
-            color: var(--color-bg);
-            padding: 1.5rem;
-            text-align: center;
-            width: 100%;
-            margin-top: auto;
-        }
-        
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .main-header {
-            background: var(--color-primary);
-            color: var(--color-bg);
-            padding: 0.5rem 0;
-            width: 100%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .header-content {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 1.5rem;
-        }
-        .logo {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--color-bg);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .nav-bar ul {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            margin: 0;
-            padding: 0;
-        }
-        .nav-bar a {
-            color: var(--color-bg);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-bar a:hover {
-            color: var(--color-accent);
-        }
-        .main-footer {
-            background: var(--color-primary);
-            color: var(--color-bg);
-            padding: 2rem 0 1rem 0;
-            width: 100%;
-            margin-top: auto;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.04);
-        }
-        .footer-content {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        .footer-nav ul {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
-            margin: 0 0 1rem 0;
-            padding: 0;
-        }
-        .footer-nav a {
-            color: var(--color-bg);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .footer-nav a:hover {
-            color: var(--color-accent);
-        }
-    </style>
+    <meta name="theme-color" content="#F7F5EF" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0A1428" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="icon" href="/images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 </head>
 <body>
-    <header class="main-header">
-        <div class="header-content">
-            <a href="/" class="logo" aria-label="Inicio Próximo Feriado Argentina">
-                <img src="images/favicon.png" alt="Logo Próximo Feriado" width="32" height="32" style="vertical-align:middle;"> Próximo Feriado Argentina
+    <a class="skip-link" href="#main">Ir al contenido</a>
+
+    <div class="shell">
+        <header class="site-header">
+            <a class="brand" href="/">
+                <img class="brand-logo" src="/images/favicon.png" alt="" width="44" height="44">
+                <p class="brand-name">Próximo Feriado</p>
             </a>
-            <nav class="nav-bar" aria-label="Navegación principal">
-                <ul>
-                    <li><a href="/" rel="home">Inicio</a></li>
-                    <li><a href="https://www.argentina.gob.ar/interior/feriados-nacionales-argentina" target="_blank" rel="noopener">Feriados Oficiales</a></li>
-                    <li><a href="https://efectod.com.ar/" target="_blank" rel="noopener">Agencia</a></li>
-                    <li><a href="https://cafecito.app/efectod" target="_blank" rel="noopener">Invitame un café</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <main>
-        <div class="offline-container">
-            <div class="offline-icon">📶</div>
-            <h2 class="offline-message">Sin conexión a internet</h2>
-            <p class="offline-description">No se puede conectar al servidor. Algunos contenidos pueden estar disponibles en modo offline si los has visitado anteriormente.</p>
-            
-            <button class="retry-button" onclick="window.location.reload()">Reintentar conexión</button>
-            
-            <div class="cached-data">
-                <h3>Información disponible offline:</h3>
-                <div id="cached-feriado">
-                    <p>Buscando información en caché...</p>
+        </header>
+
+        <main id="main" class="main">
+            <section class="hero" data-mode="today" aria-labelledby="estado-titulo">
+                <svg class="hero-sun" viewBox="-100 -100 200 200" aria-hidden="true" focusable="false"><circle class="sun-fill" r="26"/></svg>
+                <p class="hero-label">Sin conexión</p>
+                <h1 class="hero-name hero-name--xl" id="estado-titulo">No hay internet</h1>
+                <p class="hero-work">No pudimos cargar esta página. Si ya usaste Próximo Feriado en este dispositivo, lo que veas pueden ser los últimos datos guardados.</p>
+                <div class="actions">
+                    <a class="btn btn--light" href="/">Reintentar</a>
                 </div>
-            </div>
-        </div>
-    </main>
-    
-    <footer class="main-footer">
-        <div class="footer-content">
-            <nav class="footer-nav" aria-label="Navegación secundaria">
-                <ul>
-                    <li><a href="/" rel="home">Inicio</a></li>
-                    <li><a href="/offline.html">Modo Offline</a></li>
-                    <li><a href="/sitemap.xml">Mapa del sitio</a></li>
-                    <li><a href="mailto:hola@efectod.com.ar">Contacto</a></li>
-                    <li><a href="https://www.argentina.gob.ar/interior/feriados-nacionales-argentina" target="_blank" rel="noopener">Feriados Oficiales</a></li>
-                </ul>
-            </nav>
-            <p>Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank" rel="noopener">Efecto - Agencia Digital</a> | <a href="https://github.com/efectod/ProximoFeriado" target="_blank" rel="noopener">GitHub</a></p>
-            <p><small>&copy; 2024 Próximo Feriado Argentina. Todos los derechos reservados.</small></p>
-        </div>
-    </footer>
+            </section>
+        </main>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Intentar recuperar datos de feriados del localStorage
-            const feriadosData = localStorage.getItem('feriados_data');
-            const ultimaActualizacion = localStorage.getItem('feriados_ultima_actualizacion');
-            
-            if (feriadosData) {
-                try {
-                    const feriados = parseFeriados(feriadosData);
-                    mostrarFeriadoCached(feriados, ultimaActualizacion);
-                } catch (e) {
-                    console.error('Error al procesar datos en caché:', e);
-                    mostrarErrorCache();
-                }
-            } else {
-                mostrarErrorCache();
-            }
-            
-            // Verificar conexión periódicamente
-            window.addEventListener('online', function() {
-                document.querySelector('.offline-message').textContent = '¡Conexión restaurada!';
-                document.querySelector('.offline-description').textContent = 
-                    'Tu conexión a internet ha sido restaurada. Puedes continuar navegando normalmente.';
-                
-                // Redirigir a la página principal después de un breve retraso
-                setTimeout(function() {
-                    window.location.href = '/';
-                }, 2000);
-            });
-        });
-
-        function parseFeriados(data) {
-            const feriados = [];
-            const lines = data.split('\n');
-            for (let line of lines) {
-                if (line.trim() === '') continue;
-                const [nombre, fecha] = line.split(',');
-                try {
-                    const fechaObj = new Date(fecha.trim());
-                    feriados.push({ nombre, fecha: fechaObj });
-                } catch (e) {
-                    console.error(`Error al procesar la fecha para: ${nombre}`, e);
-                }
-            }
-            return feriados;
-        }
-
-        function mostrarFeriadoCached(feriados, ultimaActualizacion) {
-            const hoy = new Date();
-            hoy.setHours(0, 0, 0, 0);
-            
-            // Encontrar el próximo feriado
-            let proximoFeriado = null;
-            for (let feriado of feriados) {
-                if (feriado.fecha >= hoy) {
-                    proximoFeriado = feriado;
-                    break;
-                }
-            }
-            
-            const cachedElement = document.getElementById("cached-feriado");
-            
-            if (proximoFeriado) {
-                const diasFaltantes = Math.ceil((proximoFeriado.fecha - hoy) / (1000 * 60 * 60 * 24));
-                const fechaFormateada = formatearFecha(proximoFeriado.fecha);
-                
-                let html = '';
-                
-                if (diasFaltantes === 0) {
-                    html = `<p><strong>¡Hoy es feriado!</strong> Se celebra "${proximoFeriado.nombre}".</p>`;
-                } else {
-                    const diaTexto = diasFaltantes === 1 ? "día" : "días";
-                    html = `<p><strong>Próximo feriado:</strong> ${proximoFeriado.nombre}</p>
-                           <p><strong>Fecha:</strong> ${fechaFormateada}</p>
-                           <p><strong>Faltan:</strong> ${diasFaltantes} ${diaTexto}</p>`;
-                }
-                
-                if (ultimaActualizacion) {
-                    const fecha = new Date(ultimaActualizacion);
-                    html += `<p class="update-time"><small>Última actualización: ${fecha.toLocaleString('es-AR')}</small></p>`;
-                }
-                
-                cachedElement.innerHTML = html;
-            } else {
-                cachedElement.innerHTML = "<p>No hay información disponible sobre próximos feriados.</p>";
-            }
-        }
-
-        function mostrarErrorCache() {
-            document.getElementById("cached-feriado").innerHTML = 
-                "<p>No hay información de feriados almacenada en caché. Necesitas conectarte a internet al menos una vez para guardar los datos.</p>";
-        }
-
-        function formatearFecha(fecha) {
-            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-            
-            const diaSemana = dias[fecha.getDay()];
-            const dia = fecha.getDate();
-            const mes = meses[fecha.getMonth()];
-            const año = fecha.getFullYear();
-            
-            return `${diaSemana} ${dia} de ${mes} de ${año}`;
-        }
-    </script>
+        <footer class="site-footer">
+            <p class="credit">Proyecto realizado por <a href="https://efectod.com.ar/" target="_blank" rel="noopener">Efecto - Agencia Digital</a></p>
+        </footer>
+    </div>
 </body>
 </html>

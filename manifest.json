@@ -1,12 +1,13 @@
 {
+  "id": "/",
   "name": "Próximo Feriado Argentina",
   "short_name": "Feriados AR",
-  "description": "Descubrí cuándo es el próximo feriado en Argentina y cuántos días faltan. Calendario oficial actualizado con todos los feriados nacionales.",
+  "description": "Cuántos días faltan para el próximo feriado en Argentina, con fines de semana largos y el calendario del año.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0056b3",
-  "theme_color": "#0056b3",
-  "orientation": "portrait-primary",
+  "background_color": "#F7F5EF",
+  "theme_color": "#F7F5EF",
   "icons": [
     {
       "src": "images/icon-72x72.png",
@@ -99,11 +100,18 @@
   "related_applications": [],
   "shortcuts": [
     {
-      "name": "Ver Calendario",
+      "name": "Ver calendario",
       "short_name": "Calendario",
-      "description": "Ver el calendario completo de feriados",
-      "url": "/?action=calendario",
-      "icons": [{ "src": "images/icon-96x96.png", "sizes": "96x96" }]
+      "description": "Ver el calendario anual de feriados",
+      "url": "/?v=calendario",
+      "icons": [{ "src": "images/icon-96x96.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Ver fines de semana largos",
+      "short_name": "Fines largos",
+      "description": "Ver los próximos fines de semana largos",
+      "url": "/?v=largos",
+      "icons": [{ "src": "images/icon-96x96.png", "sizes": "96x96", "type": "image/png" }]
     }
   ]
 }
