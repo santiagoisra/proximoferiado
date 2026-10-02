@@ -495,6 +495,14 @@ test('renderLargoCard: in-progress and bridge badges', () => {
   assert.match(html, /Termina el domingo 12 de julio/);
 });
 
+test('renderLargoCard: label says "en curso" instead of "próximo" while the weekend is in progress', () => {
+  const inProgress = renderLargoCard(largoModel('2026-07-10'));
+  assert.match(inProgress, /<p class="card-label">Fin de semana largo en curso<\/p>/);
+  assert.doesNotMatch(inProgress, /Próximo fin de semana largo/);
+  const upcoming = renderLargoCard(largoModel('2026-10-02'));
+  assert.match(upcoming, /<p class="card-label">Próximo fin de semana largo<\/p>/);
+});
+
 test('renderLargoCard: null model renders nothing and reasons are escaped', () => {
   assert.equal(renderLargoCard(null), '');
   const m = largoModel('2026-10-02');

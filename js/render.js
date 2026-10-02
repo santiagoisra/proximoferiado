@@ -313,7 +313,7 @@ export function renderHero(model) {
   );
 }
 
-/** "Próximo fin de semana largo" card. Empty string when there is none. */
+/** Long-weekend card ("Próximo..." or "...en curso" while in progress). Empty string when there is none. */
 export function renderLargoCard(m) {
   if (!m) return '';
   const badges = [
@@ -322,7 +322,7 @@ export function renderLargoCard(m) {
   ].join('');
   return (
     '<article class="lw" aria-labelledby="lw-range">' +
-    '<p class="card-label">Próximo fin de semana largo</p>' +
+    `<p class="card-label">${m.enCurso ? 'Fin de semana largo en curso' : 'Próximo fin de semana largo'}</p>` +
     `<h2 class="lw-range" id="lw-range">${esc(m.rango)}</h2>` +
     `<p class="lw-days"><span class="lw-num">${m.dias}</span> días seguidos</p>` +
     `<ol class="strip" aria-hidden="true">${m.tiles
