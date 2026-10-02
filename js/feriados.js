@@ -240,6 +240,8 @@ const icsEscape = (s) => s.replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/
 const icsDate = (iso) => iso.replace(/-/g, '');
 const icsStamp = (ms) => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z');
 
+const UTF8 = new TextEncoder(); // available in browsers and Node, unlike Buffer
+
 /** RFC 5545 line folding: at most 75 octets per line, never splitting a multi-byte character. */
 function icsFold(line) {
   const parts = [];
@@ -247,7 +249,7 @@ function icsFold(line) {
   let bytes = 0;
   let limit = 75;
   for (const ch of line) {
-    const size = Buffer.byteLength(ch, 'utf8');
+    const size = UTF8.encode(ch).length;
     if (bytes + size > limit) {
       parts.push(current);
       current = '';

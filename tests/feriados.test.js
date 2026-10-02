@@ -345,3 +345,15 @@ test('toIcs folds long lines at 75 octets without breaking characters', () => {
   for (const line of ics.split('\r\n')) assert.ok(Buffer.byteLength(line, 'utf8') <= 75, `line too long: ${line}`);
   assert.ok(ics.replace(/\r\n /g, '').includes('Güemes y otras celebraciones muy extensas'));
 });
+
+test('toIcs: works in browsers, where the Node Buffer global does not exist', () => {
+  const original = globalThis.Buffer;
+  try {
+    globalThis.Buffer = undefined;
+    const out = toIcs([{ fecha: '2026-05-25', nombre: 'Día de la Revolución de Mayo con un nombre bastante largo para forzar el plegado de líneas', tipo: 'inamovible' }], 'Prueba', Date.UTC(2026, 0, 1));
+    assert.match(out, /BEGIN:VCALENDAR/);
+    assert.ok(out.split('\r\n').every((line) => new TextEncoder().encode(line).length <= 75));
+  } finally {
+    globalThis.Buffer = original;
+  }
+});
